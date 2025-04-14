@@ -1,0 +1,6 @@
+streamlit
+pandas
+matplotlib
+scikit-surprise
+numpy
+pickle-mixin
