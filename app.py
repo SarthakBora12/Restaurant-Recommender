@@ -1,243 +1,110 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": 1,
-   "id": "df1bd369",
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "Requirement already satisfied: streamlit in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (1.44.1)\n",
-      "Requirement already satisfied: packaging<25,>=20 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (21.3)\n",
-      "Requirement already satisfied: requests<3,>=2.27 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (2.28.1)\n",
-      "Requirement already satisfied: numpy<3,>=1.23 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (1.24.4)\n",
-      "Requirement already satisfied: gitpython!=3.1.19,<4,>=3.0.7 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (3.1.44)\n",
-      "Requirement already satisfied: typing-extensions<5,>=4.4.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (4.11.0)\n",
-      "Requirement already satisfied: tornado<7,>=6.0.3 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (6.1)\n",
-      "Requirement already satisfied: pillow<12,>=7.1.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (9.2.0)\n",
-      "Requirement already satisfied: pandas<3,>=1.4.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (2.2.3)\n",
-      "Requirement already satisfied: protobuf<6,>=3.20 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (4.22.3)\n",
-      "Requirement already satisfied: tenacity<10,>=8.1.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (9.1.2)\n",
-      "Requirement already satisfied: pydeck<1,>=0.8.0b4 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (0.9.1)\n",
-      "Requirement already satisfied: click<9,>=7.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (8.0.4)\n",
-      "Requirement already satisfied: altair<6,>=4.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (5.5.0)\n",
-      "Requirement already satisfied: pyarrow>=7.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (15.0.2)\n",
-      "Requirement already satisfied: cachetools<6,>=4.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (5.3.0)\n",
-      "Requirement already satisfied: toml<2,>=0.10.1 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (0.10.2)\n",
-      "Requirement already satisfied: blinker<2,>=1.0.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from streamlit) (1.9.0)\n",
-      "Requirement already satisfied: jinja2 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from altair<6,>=4.0->streamlit) (2.11.3)\n",
-      "Requirement already satisfied: narwhals>=1.14.2 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from altair<6,>=4.0->streamlit) (1.34.1)\n",
-      "Requirement already satisfied: jsonschema>=3.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from altair<6,>=4.0->streamlit) (4.16.0)\n",
-      "Requirement already satisfied: gitdb<5,>=4.0.1 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from gitpython!=3.1.19,<4,>=3.0.7->streamlit) (4.0.12)\n",
-      "Requirement already satisfied: pyparsing!=3.0.5,>=2.0.2 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from packaging<25,>=20->streamlit) (3.0.9)\n",
-      "Requirement already satisfied: pytz>=2020.1 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from pandas<3,>=1.4.0->streamlit) (2022.1)\n",
-      "Requirement already satisfied: tzdata>=2022.7 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from pandas<3,>=1.4.0->streamlit) (2025.2)\n",
-      "Requirement already satisfied: python-dateutil>=2.8.2 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from pandas<3,>=1.4.0->streamlit) (2.8.2)\n",
-      "Requirement already satisfied: charset-normalizer<3,>=2 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from requests<3,>=2.27->streamlit) (2.0.4)\n",
-      "Requirement already satisfied: idna<4,>=2.5 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from requests<3,>=2.27->streamlit) (3.3)\n",
-      "Requirement already satisfied: certifi>=2017.4.17 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from requests<3,>=2.27->streamlit) (2022.9.24)\n",
-      "Requirement already satisfied: urllib3<1.27,>=1.21.1 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from requests<3,>=2.27->streamlit) (1.26.11)\n",
-      "Requirement already satisfied: smmap<6,>=3.0.1 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from gitdb<5,>=4.0.1->gitpython!=3.1.19,<4,>=3.0.7->streamlit) (5.0.2)\n",
-      "Requirement already satisfied: MarkupSafe>=0.23 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from jinja2->altair<6,>=4.0->streamlit) (2.0.1)\n",
-      "Requirement already satisfied: attrs>=17.4.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from jsonschema>=3.0->altair<6,>=4.0->streamlit) (21.4.0)\n",
-      "Requirement already satisfied: pyrsistent!=0.17.0,!=0.17.1,!=0.17.2,>=0.14.0 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from jsonschema>=3.0->altair<6,>=4.0->streamlit) (0.18.0)\n",
-      "Requirement already satisfied: six>=1.5 in /Users/sarthak/opt/anaconda3/lib/python3.9/site-packages (from python-dateutil>=2.8.2->pandas<3,>=1.4.0->streamlit) (1.16.0)\n",
-      "Note: you may need to restart the kernel to use updated packages.\n"
-     ]
-    }
-   ],
-   "source": [
-    "pip install streamlit\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "id": "3515c6e0",
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "2025-04-13 19:45:00.171 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.176 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.176 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.177 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.177 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.177 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.178 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.392 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.392 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.498 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.581 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.687 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.711 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.720 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.720 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.720 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.721 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.721 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.721 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.721 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.722 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.722 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.722 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.722 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.723 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.723 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.723 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.723 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.724 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.724 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.725 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.725 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.725 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.726 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.726 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.726 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2025-04-13 19:45:00.726 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n"
-     ]
-    }
-   ],
-   "source": [
-    "# app.py\n",
-    "\n",
-    "import streamlit as st\n",
-    "import pandas as pd\n",
-    "import matplotlib.pyplot as plt\n",
-    "from surprise import SVD\n",
-    "import pickle\n",
-    "import warnings\n",
-    "\n",
-    "warnings.filterwarnings('ignore')\n",
-    "\n",
-    "# === Load model ===\n",
-    "with open(\"svd_model.pkl\", \"rb\") as f:\n",
-    "    model = pickle.load(f)\n",
-    "\n",
-    "# === Load datasets ===\n",
-    "business_df = pd.read_csv(\"filtered_business_data.csv\")\n",
-    "reviews_df = pd.read_csv(\"filtered_reviews_data.csv\")\n",
-    "\n",
-    "# === Recommendation function ===\n",
-    "def hybrid_recommend_for_user(user_id, business_df, reviews_df, model, top_n=5, city=None, category_filter=None):\n",
-    "    user_reviewed = reviews_df[reviews_df['user_id'] == user_id]['business_id'].unique()\n",
-    "    candidates = business_df[~business_df['business_id'].isin(user_reviewed)]\n",
-    "\n",
-    "    if city:\n",
-    "        candidates = candidates[candidates['city'].str.lower() == city.lower()]\n",
-    "    if category_filter:\n",
-    "        candidates = candidates[candidates['categories'].str.contains(category_filter, case=False, na=False)]\n",
-    "\n",
-    "    sentiment_avg = reviews_df.groupby('business_id')['vader_sentiment'].mean().to_dict()\n",
-    "    recommendations = []\n",
-    "\n",
-    "    for _, row in candidates.iterrows():\n",
-    "        business_id = row['business_id']\n",
-    "        name = row['name']\n",
-    "        try:\n",
-    "            pred = model.predict(user_id, business_id)\n",
-    "            predicted_rating = pred.est\n",
-    "            sentiment_score = sentiment_avg.get(business_id, 0)\n",
-    "            final_score = 0.6 * predicted_rating + 0.4 * sentiment_score\n",
-    "            recommendations.append({\n",
-    "                'Restaurant': name,\n",
-    "                'Predicted Rating': predicted_rating,\n",
-    "                'Sentiment Score': sentiment_score,\n",
-    "                'Final Score': final_score\n",
-    "            })\n",
-    "        except:\n",
-    "            continue\n",
-    "\n",
-    "    rec_df = pd.DataFrame(recommendations).sort_values(by='Final Score', ascending=False).head(top_n)\n",
-    "    return rec_df.reset_index(drop=True)\n",
-    "\n",
-    "# === Streamlit UI ===\n",
-    "st.set_page_config(page_title=\"Restaurant Recommender\", layout=\"wide\")\n",
-    "st.title(\"🍽️ Restaurant Recommendation System\")\n",
-    "st.markdown(\"Get personalized restaurant recommendations based on your preferences, location, and review sentiment.\")\n",
-    "\n",
-    "# Sidebar filters\n",
-    "st.sidebar.header(\"🔎 Filters\")\n",
-    "user_id = st.sidebar.selectbox(\"Select User ID\", reviews_df['user_id'].unique())\n",
-    "city = st.sidebar.selectbox(\"Select City\", sorted(business_df['city'].unique()))\n",
-    "category = st.sidebar.text_input(\"Filter by Category (e.g., Sushi, Coffee)\", \"\")\n",
-    "top_n = st.sidebar.slider(\"Number of Recommendations\", 1, 10, 5)\n",
-    "\n",
-    "# Button to get recommendations\n",
-    "if st.sidebar.button(\"Get Recommendations\"):\n",
-    "    rec_df = hybrid_recommend_for_user(\n",
-    "        user_id=user_id,\n",
-    "        business_df=business_df,\n",
-    "        reviews_df=reviews_df,\n",
-    "        model=model,\n",
-    "        top_n=top_n,\n",
-    "        city=city,\n",
-    "        category_filter=category if category.strip() else None\n",
-    "    )\n",
-    "\n",
-    "    st.subheader(\"📋 Top Recommendations\")\n",
-    "    st.dataframe(rec_df)\n",
-    "\n",
-    "    # Visualization\n",
-    "    st.subheader(\"📊 Score Comparison\")\n",
-    "    fig, ax = plt.subplots(figsize=(10, 5))\n",
-    "    x = rec_df['Restaurant']\n",
-    "    ax.bar(x, rec_df['Predicted Rating'], label='Predicted Rating')\n",
-    "    ax.bar(x, rec_df['Sentiment Score'], label='Sentiment Score', alpha=0.7)\n",
-    "    ax.bar(x, rec_df['Final Score'], label='Final Score', alpha=0.5)\n",
-    "    plt.xticks(rotation=45, ha='right')\n",
-    "    plt.ylabel('Score')\n",
-    "    plt.title(\"Score Breakdown for Recommended Restaurants\")\n",
-    "    plt.legend()\n",
-    "    st.pyplot(fig)\n",
-    "\n",
-    "    st.success(\"✅ Recommendations generated based on collaborative filtering and review sentiment!\")\n",
-    "\n",
-    "else:\n",
-    "    st.info(\"Select a user, city, and filters on the left and click 'Get Recommendations'.\")\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "id": "ceb27511",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "id": "032bb2c3",
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.9.13"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+# app.py
+import os
+import gdown
+
+# Download filtered_reviews_data.csv
+if not os.path.exists("filtered_reviews_data.csv"):
+    gdown.download("https://drive.google.com/file/d/1C0Lyfm_2QfiUvfnLzQFMapC9bLLSF6D1/view?usp=drive_link", "filtered_reviews_data.csv", quiet=False)
+
+# Download filtered_business_data.csv
+if not os.path.exists("filtered_business_data.csv"):
+    gdown.download("https://drive.google.com/file/d/1BHFazN4LSm-9NJen4WJbgX2Q5X7rzoUT/view?usp=drive_link", "filtered_business_data.csv", quiet=False)
+
+# Download svd_model.pkl
+if not os.path.exists("svd_model.pkl"):
+    gdown.download("https://drive.google.com/file/d/1FkFBBovxKLWUVlAR9_2-BkJqsO_m57BE/view?usp=drive_link", "svd_model.pkl", quiet=False)
+
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+from surprise import SVD
+import pickle
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# === Load model ===
+with open("svd_model.pkl", "rb") as f:
+    model = pickle.load(f)
+
+# === Load datasets ===
+business_df = pd.read_csv("filtered_business_data.csv")
+reviews_df = pd.read_csv("filtered_reviews_data.csv")
+
+# === Recommendation function ===
+def hybrid_recommend_for_user(user_id, business_df, reviews_df, model, top_n=5, city=None, category_filter=None):
+    user_reviewed = reviews_df[reviews_df['user_id'] == user_id]['business_id'].unique()
+    candidates = business_df[~business_df['business_id'].isin(user_reviewed)]
+
+    if city:
+        candidates = candidates[candidates['city'].str.lower() == city.lower()]
+    if category_filter:
+        candidates = candidates[candidates['categories'].str.contains(category_filter, case=False, na=False)]
+
+    sentiment_avg = reviews_df.groupby('business_id')['vader_sentiment'].mean().to_dict()
+    recommendations = []
+
+    for _, row in candidates.iterrows():
+        business_id = row['business_id']
+        name = row['name']
+        try:
+            pred = model.predict(user_id, business_id)
+            predicted_rating = pred.est
+            sentiment_score = sentiment_avg.get(business_id, 0)
+            final_score = 0.6 * predicted_rating + 0.4 * sentiment_score
+            recommendations.append({
+                'Restaurant': name,
+                'Predicted Rating': predicted_rating,
+                'Sentiment Score': sentiment_score,
+                'Final Score': final_score
+            })
+        except:
+            continue
+
+    rec_df = pd.DataFrame(recommendations).sort_values(by='Final Score', ascending=False).head(top_n)
+    return rec_df.reset_index(drop=True)
+
+# === Streamlit UI ===
+st.set_page_config(page_title="Restaurant Recommender", layout="wide")
+st.title("🍽️ Restaurant Recommendation System")
+st.markdown("Get personalized restaurant recommendations based on your preferences, location, and review sentiment.")
+
+# Sidebar filters
+st.sidebar.header("🔎 Filters")
+user_id = st.sidebar.selectbox("Select User ID", reviews_df['user_id'].unique())
+city = st.sidebar.selectbox("Select City", sorted(business_df['city'].unique()))
+category = st.sidebar.text_input("Filter by Category (e.g., Sushi, Coffee)", "")
+top_n = st.sidebar.slider("Number of Recommendations", 1, 10, 5)
+
+# Button to get recommendations
+if st.sidebar.button("Get Recommendations"):
+    rec_df = hybrid_recommend_for_user(
+        user_id=user_id,
+        business_df=business_df,
+        reviews_df=reviews_df,
+        model=model,
+        top_n=top_n,
+        city=city,
+        category_filter=category if category.strip() else None
+    )
+
+    st.subheader("📋 Top Recommendations")
+    st.dataframe(rec_df)
+
+    # Visualization
+    st.subheader("📊 Score Comparison")
+    fig, ax = plt.subplots(figsize=(10, 5))
+    x = rec_df['Restaurant']
+    ax.bar(x, rec_df['Predicted Rating'], label='Predicted Rating')
+    ax.bar(x, rec_df['Sentiment Score'], label='Sentiment Score', alpha=0.7)
+    ax.bar(x, rec_df['Final Score'], label='Final Score', alpha=0.5)
+    plt.xticks(rotation=45, ha='right')
+    plt.ylabel('Score')
+    plt.title("Score Breakdown for Recommended Restaurants")
+    plt.legend()
+    st.pyplot(fig)
+
+    st.success("✅ Recommendations generated based on collaborative filtering and review sentiment!")
+
+else:
+    st.info("Select a user, city, and filters on the left and click 'Get Recommendations'.")
